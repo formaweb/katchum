@@ -12,6 +12,7 @@ apt-get update
 apt-get -y install nginx
 
 cp modules/nginx/nginx.conf /etc/nginx/nginx.conf
+cp modules/nginx/sites-available/default /etc/nginx/sites-available/default
 
 mkdir /etc/nginx/defaults
 cp modules/nginx/defaults/assets.conf /etc/nginx/defaults/assets.conf
