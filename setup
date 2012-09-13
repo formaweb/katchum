@@ -7,7 +7,7 @@ apt-get -y install mysql-client mysql-server imagemagick postfix
 
 
 # Nginx
-add-apt-repository ppa:nginx/stable
+add-apt-repository -y ppa:nginx/stable
 apt-get update
 apt-get -y install nginx
 
