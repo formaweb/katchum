@@ -1,5 +1,5 @@
 server {
-  listen 80;
+  listen 80 default_server;
   server_name domain.com;
 
   return 301 $scheme://www.domain.com$request_uri;
@@ -29,4 +29,8 @@ server {
 
   # Languages
   include defaults/php.conf;
+  #include defaults/ruby.conf;
 }
+
+# Languages
+#include defaults/unicorn.conf;
