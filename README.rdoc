@@ -1,0 +1,29 @@
+= Katchum
+
+Katchum is a library to help to configure applications servers.
+
+== Software Versions
+
+* Nginx 1.2.3
+* PHP 5.4.6
+* Ruby 1.9.3-p320
+
+== How to install?
+
+Make sure you have git installed on your Ubuntu System.
+
+  apt-get install git-core
+
+Clone this repository.
+
+  git clone git://github.com/formaweb/katchum.git
+  cd katchum
+
+To infinity and beyond!
+
+  sh setup
+
+== Thanks!
+
+* vladgh/VladGh.com-LEMP (https://github.com/vladgh/VladGh.com-LEMP)
+* h5bp/server-configs (https://github.com/h5bp/server-configs)

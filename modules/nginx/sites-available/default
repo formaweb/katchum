@@ -1,0 +1,32 @@
+server {
+  listen 80;
+  server_name domain.com;
+
+  return 301 $scheme://www.domain.com$request_uri;
+}
+
+server {
+  listen 80;
+  server_name www.domain.com;
+
+  root /var/www/domain.com;
+
+  # Log
+  access_log  /var/log/nginx/domain.com.access.log;
+  error_log   /var/log/nginx/domain.com.error.log;
+
+  # Charset
+  charset utf-8;
+
+  # Errors Pages
+  error_page 404 /404.html;
+
+  # Modules
+  include defaults/assets.conf;
+  include defaults/x-ua-compatible.conf;
+  include defaults/cross-domain-fonts.conf;
+  include defaults/protect-system-files.conf;
+
+  # Languages
+  include defaults/php.conf;
+}
