@@ -4,9 +4,9 @@ Katchum is a library to help to configure applications servers.
 
 == Software Versions
 
-* Nginx 1.2.3
-* PHP 5.4.6
-* Ruby 1.9.3-p320
+* Nginx 1.2.4
+* PHP 5.4.8
+* Ruby 1.9.3-p286 (Rbenv)
 
 == How to install?
 

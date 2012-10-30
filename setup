@@ -1,9 +1,11 @@
+#!/bin/bash
+
 apt-get update
 apt-get -y upgrade
 
-apt-get -y install curl git-core python-software-properties build-essential openssl
+apt-get -y install curl openssl git-core python-software-properties build-essential
 
-apt-get -y install mysql-client mysql-server imagemagick postfix
+apt-get -y install mysql-client mysql-server libmysqlclient-dev imagemagick postfix
 
 
 # Nginx
@@ -40,10 +42,11 @@ mkdir /var/log/php5
 
 
 # Rbenv
+apt-get -y install libmysql-ruby
 curl https://raw.github.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash
 nano /root/.bashrc
 . /root/.bashrc
 rbenv bootstrap-ubuntu-12-04
-rbenv install 1.9.3-p320
-rbenv global 1.9.3-p320
+rbenv install 1.9.3-p286
+rbenv global 1.9.3-p2866
 rbenv update
