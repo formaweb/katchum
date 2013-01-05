@@ -47,6 +47,6 @@ curl https://raw.github.com/fesplugas/rbenv-installer/master/bin/rbenv-installer
 nano /root/.bashrc
 . /root/.bashrc
 rbenv bootstrap-ubuntu-12-04
-rbenv install 1.9.3-p286
-rbenv global 1.9.3-p2866
+rbenv install 1.9.3-p362
+rbenv global 1.9.3-p362
 rbenv update
