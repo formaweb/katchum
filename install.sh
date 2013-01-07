@@ -53,19 +53,19 @@ selected_modules=$( dialog --stdout \
   Postfix  ''  on \
   ImageMagick  ''  on )
 
-progress=0
-selected_modules_count=($selected_modules)
+clear
+
+# progress=0
+# selected_modules_count=($selected_modules)
 for module in ${selected_modules} ; do
-  progress=$((progress + 1))
+  # progress=$((progress + 1))
 
-  echo $((progress * 100 / ${#selected_modules_count[@]})) | dialog \
-    --backtitle ${title} \
-    --gauge "Installing ${module}..." \
-    10 70 0
+  # echo $((progress * 100 / ${#selected_modules_count[@]})) | dialog \
+  #  --backtitle ${title} \
+  #  --gauge "Installing ${module}..." \
+  #  10 70 0
 
-  install_${module,,} &
-
-  sleep 1
+  install_${module,,}
 done
 
 dialog \
