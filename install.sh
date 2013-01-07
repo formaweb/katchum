@@ -13,11 +13,6 @@ if [ $(id -u) != "0" ]; then
   exit 1
 fi
 
-# Load Formulas
-for file in ${formulas} ; do
-  . ${file}
-done
-
 # Update System
 apt-get update
 apt-get -y upgrade
@@ -29,6 +24,11 @@ apt-get -y install curl openssl git-core python-software-properties build-essent
 if [ ! -d "${sources}" ]; then
   mkdir ${sources}
 fi
+
+# Load Formulas
+for file in ${formulas} ; do
+  . ${file}
+done
 
 # Dialog
 command -v dialog > /dev/null 2>&1 || { install_dialog; }
@@ -43,21 +43,34 @@ dialog \
 selected_modules=$( dialog --stdout \
   --separate-output \
   --backtitle ${title} \
-  --title 'Packages' \
-  --checklist 'Select the packages you want to install.' \
+  --title "Packages" \
+  --checklist "Select the packages you want to install." \
   0 0 0 \
-  nginx  ''  on \
-  php5  ''  on \
-  rbenv  ''  on \
-  mysql  ''  on \
-  postfix  ''  on \
-  imagemagick  ''  on )
+  Nginx  ''  on \
+  PHP5  ''  on \
+  Rbenv  ''  on \
+  MySQL  ''  on \
+  Postfix  ''  on \
+  ImageMagick  ''  on )
 
-echo "$selected_modules" | while read module
-do
-  `install_${module}`
+progress=0
+selected_modules_count=($selected_modules)
+for module in ${selected_modules} ; do
+  progress=$((progress + 1))
+
+  echo $((progress * 100 / ${#selected_modules_count[@]})) | dialog \
+    --backtitle ${title} \
+    --gauge "Installing ${module}..." \
+    10 70 0
+
+  install_${module,,} &
+
+  sleep 1
 done
 
-clear
+dialog \
+  --backtitle ${title} \
+  --msgbox 'The installation was finished.' \
+  7 35
 
-echo 'Done! Katchum!'
+clear

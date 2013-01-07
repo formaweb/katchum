@@ -21,7 +21,7 @@ Clone this repository.
 
 To infinity and beyond!
 
-  sh install.sh
+  bash install.sh
 
 == Thanks!
 
