@@ -1,14 +1,28 @@
 #!/bin/bash
 
 install_nginx() {
-  add-apt-repository -y ppa:nginx/stable
-  apt-get update
-  apt-get -y install nginx
+
+  # Downloading
+  wget -O ${sources}/nginx-1.3.10.tar.gz "http://nginx.org/download/nginx-1.3.10.tar.gz"
+
+  # Extracting
+  tar xzvf ${sources}/nginx-1.3.10.tar.gz -C ${sources}
+  cd ${sources}/nginx-1.3.10
+
+  # Installing Dependencies
+  apt-get -y install libpcre3 libpcre3-dev libssl-dev
+
+  # Compiling
+  ./configure --prefix=/usr/local/nginx --conf-path=/etc/nginx/nginx.conf --http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log --pid-path=/var/run/nginx.pid --lock-path=/var/lock/nginx.lock --with-http_stub_status_module --with-http_ssl_module --with-http_realip_module --with-http_gzip_static_module --with-ipv6 --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module
+  make -j8
+  make install
+
+  # Configuring
+  mkdir -p /etc/nginx/defaults /etc/nginx/sites-available /etc/nginx/sites-enabled /var/log/nginx
+  chown -R www-data:www-data /var/log/nginx
 
   cp ${modules}/nginx/nginx.conf /etc/nginx/nginx.conf
-  cp ${modules}/nginx/sites-available/default /etc/nginx/sites-available/default
 
-  mkdir /etc/nginx/defaults
   cp ${modules}/nginx/defaults/assets.conf /etc/nginx/defaults/assets.conf
   cp ${modules}/nginx/defaults/cache-busting.conf /etc/nginx/defaults/cache-busting.conf
   cp ${modules}/nginx/defaults/cross-domain-ajax.conf /etc/nginx/defaults/cross-domain-ajax.conf
@@ -19,6 +33,27 @@ install_nginx() {
   cp ${modules}/nginx/defaults/ruby.conf /etc/nginx/defaults/ruby.conf
   cp ${modules}/nginx/defaults/x-ua-compatible.conf /etc/nginx/defaults/x-ua-compatible.conf
 
-  mkdir /var/log/nginx
-  mkdir /usr/share/nginx/logs
+  cp ${modules}/nginx/sites-available/default /etc/nginx/sites-available/default
+  ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+  cp ${modules}/nginx/init.d/nginx /etc/init.d/nginx
+  chmod +x /etc/init.d/nginx
+
+  update-rc.d -f nginx defaults
+
+  # Logrotate
+  echo '/var/log/nginx/*.log {
+  weekly
+  missingok
+  rotate 52
+  compress
+  delaycompress
+  notifempty
+  create 640 root adm
+  sharedscripts
+  postrotate
+    [ ! -f /var/run/nginx.pid ] || kill -USR1 `cat /var/run/nginx.pid`
+  endscript
+}' > /etc/logrotate.d/nginx
+
 }

@@ -1,15 +1,15 @@
-server {
-  listen 80 default_server;
-  server_name domain.com;
-
-  return 301 $scheme://www.domain.com$request_uri;
-}
+#server {
+#  listen 80 default_server;
+#  server_name example.com;
+#
+#  return 301 $scheme://www.example.com$request_uri;
+#}
 
 server {
   listen 80;
-  server_name www.domain.com;
+  server_name localhost;
 
-  root /var/www/domain.com;
+  root html;
 
   # Log
   access_log  /var/log/nginx/$host.access.log;
@@ -28,7 +28,7 @@ server {
   include defaults/protect-system-files.conf;
 
   # Languages
-  include defaults/php.conf;
+  #include defaults/php.conf;
   #include defaults/ruby.conf;
 }
 

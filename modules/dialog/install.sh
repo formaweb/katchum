@@ -12,9 +12,9 @@ install_dialog() {
   # Installing Dependencies
   apt-get -y install libncurses5-dev
 
-  # Installing
+  # Compiling
   ./configure
-  make
+  make -j8
   make install
 
   # Ending

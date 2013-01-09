@@ -46,25 +46,18 @@ selected_modules=$( dialog --stdout \
   --title "Packages" \
   --checklist "Select the packages you want to install." \
   0 0 0 \
+  Postfix  ''  on \
+  ImageMagick  ''  on \
   Nginx  ''  on \
   PHP5  ''  on \
+  APC  ''  on \
   Rbenv  ''  on \
   MySQL  ''  on \
-  Postfix  ''  on \
-  ImageMagick  ''  on )
+  VSFTPd  ''  on )
 
 clear
 
-# progress=0
-# selected_modules_count=($selected_modules)
 for module in ${selected_modules} ; do
-  # progress=$((progress + 1))
-
-  # echo $((progress * 100 / ${#selected_modules_count[@]})) | dialog \
-  #  --backtitle ${title} \
-  #  --gauge "Installing ${module}..." \
-  #  10 70 0
-
   install_${module,,}
 done
 
