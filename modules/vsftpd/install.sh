@@ -21,6 +21,11 @@ install_vsftpd() {
 
   cp vsftpd.conf /etc
 
+  cp ${modules}/vsftpd/init.d/vsftpd /etc/init.d/vsftpd
+  chmod +x /etc/init.d/vsftpd
+
+  update-rc.d -f vsftpd defaults
+
   # Installing
   make install
 
