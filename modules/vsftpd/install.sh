@@ -19,12 +19,7 @@ install_vsftpd() {
   chown root.root /var/ftp
   chmod og-w /var/ftp
 
-  cp vsftpd.conf /etc
-
-  cp ${modules}/vsftpd/init.d/vsftpd /etc/init.d/vsftpd
-  chmod +x /etc/init.d/vsftpd
-
-  update-rc.d -f vsftpd defaults
+  cp ${modules}/vsftpd/vsftpd.conf /etc/vsftpd.conf
 
   # Installing
   make install
@@ -40,5 +35,7 @@ install_vsftpd() {
   endscript
 }' > /etc/logrotate.d/vsftpd
 
+  # Start
+  /usr/local/sbin/vsftpd &
 
 }

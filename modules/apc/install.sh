@@ -3,11 +3,11 @@
 install_nginx() {
 
   # Downloading
-  wget -O ${sources}/APC-3.1.14.tgz "http://pecl.php.net/get/APC-3.1.14.tgz"
+  wget -O ${sources}/APC-3.1.13.tgz "http://pecl.php.net/get/APC-3.1.13.tgz"
 
   # Extracting
-  tar xzvf ${sources}/APC-3.1.14.tgz -C ${sources}
-  cd ${sources}/APC-3.1.14
+  tar xzvf ${sources}/APC-3.1.13.tgz -C ${sources}
+  cd ${sources}/APC-3.1.13
 
   # Compiling
   /usr/local/php5/bin/phpize -clean

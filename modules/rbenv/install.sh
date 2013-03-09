@@ -15,7 +15,7 @@ fi' >> ~/.bash_profile
 
   rbenv bootstrap-ubuntu-12-04
 
-  rbenv install 1.9.3-p374
-  rbenv global 1.9.3-p374
+  rbenv install 2.0.0-p0
+  rbenv global 2.0.0-p0
   rbenv update
 }

@@ -18,7 +18,7 @@ apt-get update
 apt-get -y upgrade
 
 # Essentials Instalation
-apt-get -y install curl openssl git-core python-software-properties build-essential
+apt-get -y install autoconf curl openssl git-core python-software-properties build-essential
 
 # Source Directory
 if [ ! -d "${sources}" ]; then
@@ -40,11 +40,13 @@ dialog \
   --textbox LICENSE \
   0 0
 
+hostname=$( dialog --stdout --inputbox 'Set a hostname:' 0 0 ${hostname} )
+
 selected_modules=$( dialog --stdout \
   --separate-output \
   --backtitle ${title} \
-  --title "Packages" \
-  --checklist "Select the packages you want to install." \
+  --title 'Packages' \
+  --checklist 'Select the packages you want to install.' \
   0 0 0 \
   Postfix  ''  on \
   ImageMagick  ''  on \
@@ -57,6 +59,8 @@ selected_modules=$( dialog --stdout \
 
 clear
 
+echo "${hostname}" > /etc/hostname
+
 for module in ${selected_modules} ; do
   install_${module,,}
 done
@@ -65,5 +69,14 @@ dialog \
   --backtitle ${title} \
   --msgbox 'The installation was finished.' \
   7 35
+
+dialog \
+  --backtitle ${title} \
+  --yesno 'Do you want to reboot?' \
+  0 0
+
+if [ $? = 0 ]; then
+  reboot
+fi
 
 clear
