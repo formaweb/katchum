@@ -28,11 +28,22 @@ server {
   include defaults/protect-system-files.conf;
 
   # Languages
+  
+  # PHP Application
   #include defaults/php.conf;
+  
+  # Ruby Application
   #include defaults/ruby.conf;
+  #set $namespace "application_namespace";
 }
 
 # Unicorn
 #upstream domain.com_server {
 #  server unix:/tmp/domain.com.sock fail_timeout=0;
+#}
+
+# Redirects
+#server {
+#  server_name example.com example.biz;
+#  rewrite ^/(.*) http://www.example.com/$1 permanent;
 #}
