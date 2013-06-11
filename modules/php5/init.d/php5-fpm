@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 
 ### BEGIN INIT INFO
 # Provides:          php-fpm
@@ -10,11 +10,13 @@
 # Description:       starts the PHP FastCGI Process Manager daemon
 ### END INIT INFO
 
+
 php_fpm_BIN=/usr/local/php5/sbin/php-fpm
 php_fpm_CONF=/etc/php5/php-fpm.conf
 php_fpm_PID=/var/run/php-fpm.pid
 
-php_opts="--fpm-config /etc/php5/php-fpm.conf $php_fpm_CONF"
+
+php_opts="--fpm-config $php_fpm_CONF"
 
 
 wait_for_pid () {
@@ -43,6 +45,7 @@ wait_for_pid () {
     sleep 1
 
   done
+
 }
 
 case "$1" in
