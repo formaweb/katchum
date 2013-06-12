@@ -1,6 +1,6 @@
 #!/bin/bash
 
-install_nginx() {
+install_apc() {
 
   # Downloading
   wget -O ${sources}/APC-3.1.13.tgz "http://pecl.php.net/get/APC-3.1.13.tgz"
