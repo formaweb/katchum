@@ -1,0 +1,7 @@
+% layout 'default';
+% title 'Welcome';
+
+<div class="jumbotron">
+  <h1>Welcome!</h1>
+  <p>This is a test version of the <strong>Katchum Panel</strong>, soon this page will be enhanced.</p>
+</div>

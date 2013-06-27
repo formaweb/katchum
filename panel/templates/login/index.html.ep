@@ -1,0 +1,62 @@
+% title 'Login';
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+    <link href="/stylesheets/plugins/bootstrap.css" rel="stylesheet">
+
+    <style>
+      body {
+        background: #f5f5f5;
+        padding: 80px 0 40px;
+      }
+
+      .form-signin {
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.03);
+        border: 1px solid #eee;
+        border-radius: 4px;
+        background: #fff;
+        max-width: 300px;
+        margin: 0 auto;
+        padding: 15px;
+      }
+      .form-signin-heading {
+        margin: 0 0 20px;
+      }
+      .form-signin input[type="text"] {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        margin-bottom: -1px;
+      }
+      .form-signin input[type="password"] {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        margin-bottom: 10px;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <div class="body-content">
+
+      <form class="form-signin" action="/login/authenticate?url=<%= $url %>" method="POST">
+        <h2 class="form-signin-heading">Katchum</h2>
+
+        <input type="text" class="input-block-level" name="username" placeholder="Username" autofocus>
+        <input type="password" class="input-block-level" name="password" placeholder="Password">
+
+        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+      </form>
+
+    </div>
+
+    <%= content_for 'after' %>
+  </body>
+
+</html>

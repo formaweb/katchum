@@ -36,6 +36,7 @@ install_vsftpd() {
 }' > /etc/logrotate.d/vsftpd
 
   # Start
+  # TODO: Set to start on boot.
   /usr/local/sbin/vsftpd &
 
 }

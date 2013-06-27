@@ -1,0 +1,71 @@
+#!/usr/bin/env perl
+use Mojolicious::Lite;
+use Passwd::Unix;
+
+# Instance
+my $passwd = Passwd::Unix->new();
+
+app->sessions->default_expiration(86400);
+app->secret('TeENinx#*dj3892Ksq0a');
+
+# Routes
+get '/login' => sub {
+  my $self = shift;
+
+  delete $self->session->{current_user};
+
+  $self->stash(
+    url => $self->param('url') || ''
+  );
+} => 'login/index';
+
+post '/login/authenticate' => sub {
+  my $self = shift;
+
+  if ($self->param('username') eq 'caio' and $self->param('password') eq 'tarifa') {
+    $self->session(
+      current_user => $self->param('username')
+    );
+  }
+
+  $self->redirect_to($self->param('url') || '/');
+};
+
+under sub {
+  my $self = shift;
+
+  return 1 if $self->session->{current_user};
+
+  $self->redirect_to('/login?url=' . $self->req->url);
+  return;
+};
+
+get '/', 'index';
+
+get '/server/information' => sub {
+  my $self = shift;
+
+  $self->stash(
+    system_information => `uname -a` || undef,
+    operational_system => `lsb_release -a` || undef,
+    current_memory_usage => `free -m` || undef,
+    current_disk_usage => `df -h` || undef
+  );
+} => 'server/information';
+
+get '/users' => sub {
+  my $self = shift;
+
+  $self->stash(
+    users => $passwd->users
+  );
+} => 'users/index';
+
+any '/users/:user/password' => sub {
+  my $self = shift;
+
+  $self->flash(type => 'success', message => 'Password changed successfully!');
+  $self->redirect_to('/users');
+};
+
+app->start;

@@ -1,0 +1,56 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  padding-top: 50px;
+}
+
+footer {
+  border-top: 1px solid #ddd;
+  background-color: #f5f5f5;
+}
+
+footer .copyright {
+  margin: 20px 10px;
+}
+
+/* Navbar */
+.logout {
+  margin-left: 10px;
+  font-size: 80%;
+  color: #fff;
+}
+
+.logout:hover {
+  text-decoration: none;
+  color: #999;
+}
+
+/* Body Content */
+.body-content {
+  height: auto !important;
+  height: 100%;
+  min-height: 100%;
+  margin: 0 auto -60px;
+  padding: 0 10px 60px;
+}
+
+/* Table */
+.table col.options {
+  width: 140px;
+}
+
+.table td {
+  vertical-align: middle !important;
+}
+
+/* Form */
+.control-group {
+  margin-top: 10px;
+}
+
+/* Jumbotron */
+.jumbotron {
+  margin-top: 20px;
+}

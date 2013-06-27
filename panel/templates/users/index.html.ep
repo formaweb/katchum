@@ -1,0 +1,74 @@
+% layout 'default';
+% title 'Users';
+
+% content_for after => begin
+<form class="modal fade" id="changePassword" action="/users/username/password" method="post">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title"><strong>User</strong> &raquo; Change Password</h4>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="control-group">
+          <label class="control-label" for="inputPassword">Password:</label>
+          <div class="controls">
+            <input type="password" id="inputPassword" required>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="inputPasswordConfirmation">Password Confirmation:</label>
+          <div class="controls">
+            <input type="password" id="inputPasswordConfirmation" required>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" data-loading-text="Loading...">Change</button>
+      </div>
+    </div>
+  </div>
+</form>
+% end
+
+<div class="page-header">
+  <h1>Users</h1>
+</div>
+
+<% if (flash 'type') { %>
+<div class="alert alert-<%= flash 'type' %>">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <%= flash 'message' %>
+</div>
+<% } %>
+
+<table class="table table-bordered table-striped">
+
+  <col span="1" />
+  <col class="options" />
+
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% foreach my $user ($users) { %>
+    <tr>
+      <td><%= $user %></td>
+      <td>
+        <a class="btn btn-warning btn-small" href="#changePassword" data-toggle="modal">Change Password</a>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+
+</table>

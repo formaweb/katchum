@@ -1,0 +1,34 @@
+% layout 'default';
+% title 'Server Information';
+
+<div class="page-header">
+  <h1>Server Information</h1>
+</div>
+
+<% if ($system_information) { %>
+<div class="panel">
+  <div class="panel-heading">System Information</div>
+  <pre><%= $system_information %></pre>
+</div>
+<% } %>
+
+<% if ($operational_system) { %>
+<div class="panel">
+  <div class="panel-heading">Operational System</div>
+  <pre><%= $operational_system %></pre>
+</div>
+<% } %>
+
+<% if ($current_memory_usage) { %>
+<div class="panel">
+  <div class="panel-heading">Current Memory Usage</div>
+  <pre><%= $current_memory_usage %></pre>
+</div>
+<% } %>
+
+<% if ($current_disk_usage) { %>
+<div class="panel">
+  <div class="panel-heading">Current Disk Usage</div>
+  <pre><%= $current_disk_usage %></pre>
+</div>
+<% } %>
