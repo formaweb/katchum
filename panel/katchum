@@ -5,8 +5,12 @@ use Passwd::Unix;
 # Instance
 my $passwd = Passwd::Unix->new();
 
-app->sessions->default_expiration(86400);
-app->secret('TeENinx#*dj3892Ksq0a');
+app->config(
+  hypnotoad => {listen => ['http://*:2080']}
+);
+
+app->sessions->default_expiration(3600);
+app->secret('TeENinx#*dj3892Ksq0a'); # Change
 
 # Routes
 get '/login' => sub {
@@ -21,19 +25,26 @@ get '/login' => sub {
 
 post '/login/authenticate' => sub {
   my $self = shift;
+  my $users = ('root');
 
-  if ($self->param('username') eq 'caio' and $self->param('password') eq 'tarifa') {
-    $self->session(
-      current_user => $self->param('username')
-    );
+  foreach my $user ($users) {
+    if ($self->param('username') eq $user) {
+      if ($passwd->passwd($user) eq crypt($self->param('password'), $passwd->passwd($user))) {
+        $self->session(
+          current_user => $self->param('username')
+        );
+        $self->redirect_to($self->param('url') || '/');
+        return;
+      }
+    }
   }
 
-  $self->redirect_to($self->param('url') || '/');
+  $self->flash(type => 'danger', message => 'Oops! Wrong combination.');
+  $self->redirect_to('/login');
 };
 
 under sub {
   my $self = shift;
-
   return 1 if $self->session->{current_user};
 
   $self->redirect_to('/login?url=' . $self->req->url);
@@ -55,16 +66,23 @@ get '/server/information' => sub {
 
 get '/users' => sub {
   my $self = shift;
+  my @users = $passwd->users;
+  my @usersSystem = ('root', 'daemon', 'bin', 'sys', 'sync', 'games', 'man', 'lp', 'mail', 'news', 'uucp', 'proxy', 'www-data', 'backup', 'list', 'irc', 'gnats', 'nobody', 'libuuid', 'syslog', 'messagebus', 'sshd', 'postfix', 'snmp', 'mysql', 'ftp');
+
+  @users = grep{ not $_ ~~ @usersSystem } @users;
 
   $self->stash(
-    users => $passwd->users
+    users => \@users
   );
 } => 'users/index';
 
-any '/users/:user/password' => sub {
+any '/users/:username/password' => sub {
   my $self = shift;
 
+  # TODO: Callback.
+  $passwd->passwd($self->param('username'), $passwd->encpass($self->param('password')));
   $self->flash(type => 'success', message => 'Password changed successfully!');
+
   $self->redirect_to('/users');
 };
 
