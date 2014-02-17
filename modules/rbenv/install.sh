@@ -17,7 +17,7 @@ fi' >> ~/.bashrc
 
   rbenv bootstrap-ubuntu-12-04
 
-  rbenv install 2.0.0-p247
-  rbenv global 2.0.0-p247
+  rbenv install 2.1.0
+  rbenv global 2.1.0
   rbenv update
 }
