@@ -93,7 +93,7 @@ while true ; do
             --no-cancel \
             --checklist 'The Nginx server works with the following programming languages:' \
             0 0 0 \
-            PHP '' on \
+            PHP5 '' on \
             Rbenv '' off ))
         ;;
       esac
