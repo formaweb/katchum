@@ -41,7 +41,8 @@ dialog \
   0 0
 
 action=1
-while true; do
+selected_modules=()
+while true ; do
   action=$( dialog --stdout \
     --backtitle ${title} \
     --title 'Step-By-Step' \
@@ -73,19 +74,19 @@ while true; do
     ;;
 
     3)
-      selected_modules+=$( dialog --stdout \
+      selected_modules+=($( dialog --stdout \
         --separate-output \
         --backtitle ${title} \
         --title 'Webserver' \
         --no-cancel \
         --checklist '' \
         0 0 0 \
-        Nginx '' on )
+        Nginx '' on ))
 
       # Nginx
       case "${selected_modules[@]}" in
         *"Nginx"*)
-          selected_modules+=$( dialog --stdout \
+          selected_modules+=($( dialog --stdout \
             --separate-output \
             --backtitle ${title} \
             --title 'Nginx' \
@@ -93,72 +94,71 @@ while true; do
             --checklist 'The Nginx server works with the following programming languages:' \
             0 0 0 \
             PHP '' on \
-            Rbenv '' off )
+            Rbenv '' off ))
         ;;
       esac
 
       # PHP
       case "${selected_modules[@]}" in
         *"PHP"*)
-          selected_modules+=$( dialog --stdout \
+          selected_modules+=($( dialog --stdout \
             --separate-output \
             --backtitle ${title} \
             --title 'PHP' \
             --no-cancel \
             --checklist 'Select the PHP add-ons:' \
             0 0 0 \
-            APC '' on )
+            APC '' on ))
         ;;
       esac
     ;;
 
     4)
-      selected_modules+=$( dialog --stdout \
+      selected_modules+=($( dialog --stdout \
         --separate-output \
         --backtitle ${title} \
         --title 'FTP' \
         --no-cancel \
         --checklist '' \
         0 0 0 \
-        VSFTPd '' on )
+        VSFTPd '' on ))
     ;;
 
     5)
-      selected_modules+=$( dialog --stdout \
+      selected_modules+=($( dialog --stdout \
         --separate-output \
         --backtitle ${title} \
         --title 'Mail' \
         --no-cancel \
         --checklist '' \
         0 0 0 \
-        Postfix '' on )
+        Postfix '' on ))
     ;;
 
     6)
-      selected_modules+=$( dialog --stdout \
+      selected_modules+=($( dialog --stdout \
         --separate-output \
         --backtitle ${title} \
         --title 'Database' \
         --no-cancel \
         --checklist '' \
         0 0 0 \
-        MySQL '' on )
+        MySQL '' on ))
     ;;
 
     7)
-      selected_modules+=$( dialog --stdout \
+      selected_modules+=($( dialog --stdout \
         --separate-output \
-        --backtitle ${title} \
         --title 'Others' \
         --no-cancel \
         --checklist '' \
         0 0 0 \
-        ImageMagick '' on )
+        ImageMagick '' on ))
     ;;
 
     8)
-      for module in ${selected_modules} ; do
-        install_${module,,}
+      for module in ${selected_modules[@]} ; do
+        install_${module}
       done
 
       dialog \
