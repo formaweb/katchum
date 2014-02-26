@@ -1,17 +1,17 @@
 #!/bin/bash
 
+# Is Root?
+if [ $(id -u) != "0" ]; then
+  echo "Error: You must be root to run this installer. You can try again using 'sudo'."
+  exit 1
+fi
+
 # Variables
 directory=`dirname $(readlink -f $0)`
 formulas="${directory}/modules/*/install.sh"
 modules="${directory}/modules"
 sources="${directory}/sources"
 title="Katchum"
-
-# Is Root?
-if [ $(id -u) != "0" ]; then
-  echo "Error: You must be root to run this installer. You can try again using 'sudo'."
-  exit 1
-fi
 
 # Update System
 apt-get update
@@ -40,43 +40,149 @@ dialog \
   --textbox LICENSE \
   0 0
 
-hostname=$( dialog --stdout --inputbox 'Set a hostname:' 0 0 ${hostname} )
+action=1
+while true; do
+  action=$( dialog --stdout \
+    --backtitle ${title} \
+    --title 'Step-By-Step' \
+    --default-item ${action} \
+    --no-cancel \
+    --menu '' \
+    0 0 0 \
+    1 'Basic setup' \
+    2 'DNS' \
+    3 'Webserver' \
+    4 'FTP' \
+    5 'Mail' \
+    6 'Database' \
+    7 'Others' \
+    8 'Install' \
+    9 'Exit' )
 
-selected_modules=$( dialog --stdout \
-  --separate-output \
-  --backtitle ${title} \
-  --title 'Packages' \
-  --checklist 'Select the packages you want to install.' \
-  0 0 0 \
-  Postfix  ''  on \
-  ImageMagick  ''  on \
-  Nginx  ''  on \
-  PHP5  ''  on \
-  APC  ''  on \
-  Rbenv  ''  on \
-  MySQL  ''  on \
-  VSFTPd  ''  on )
+  case ${action} in
+    1)
+      hostname=$( dialog --stdout --backtitle ${title} --inputbox 'Set a hostname:' 0 0 ${hostname} )
+      echo "${hostname}" > /etc/hostname
+    ;;
 
-clear
+    2)
+      dialog \
+        --backtitle ${title} \
+        --msgbox 'No options available.' \
+        7 25
+    ;;
 
-echo "${hostname}" > /etc/hostname
+    3)
+      selected_modules+=$( dialog --stdout \
+        --separate-output \
+        --backtitle ${title} \
+        --title 'Webserver' \
+        --no-cancel \
+        --checklist '' \
+        0 0 0 \
+        Nginx '' on )
 
-for module in ${selected_modules} ; do
-  install_${module,,}
+      # Nginx
+      case "${selected_modules[@]}" in
+        *"Nginx"*)
+          selected_modules+=$( dialog --stdout \
+            --separate-output \
+            --backtitle ${title} \
+            --title 'Nginx' \
+            --no-cancel \
+            --checklist 'The Nginx server works with the following programming languages:' \
+            0 0 0 \
+            PHP '' on \
+            Rbenv '' off )
+        ;;
+      esac
+
+      # PHP
+      case "${selected_modules[@]}" in
+        *"PHP"*)
+          selected_modules+=$( dialog --stdout \
+            --separate-output \
+            --backtitle ${title} \
+            --title 'PHP' \
+            --no-cancel \
+            --checklist 'Select the PHP add-ons:' \
+            0 0 0 \
+            APC '' on )
+        ;;
+      esac
+    ;;
+
+    4)
+      selected_modules+=$( dialog --stdout \
+        --separate-output \
+        --backtitle ${title} \
+        --title 'FTP' \
+        --no-cancel \
+        --checklist '' \
+        0 0 0 \
+        VSFTPd '' on )
+    ;;
+
+    5)
+      selected_modules+=$( dialog --stdout \
+        --separate-output \
+        --backtitle ${title} \
+        --title 'Mail' \
+        --no-cancel \
+        --checklist '' \
+        0 0 0 \
+        Postfix '' on )
+    ;;
+
+    6)
+      selected_modules+=$( dialog --stdout \
+        --separate-output \
+        --backtitle ${title} \
+        --title 'Database' \
+        --no-cancel \
+        --checklist '' \
+        0 0 0 \
+        MySQL '' on )
+    ;;
+
+    7)
+      selected_modules+=$( dialog --stdout \
+        --separate-output \
+        --backtitle ${title} \
+        --title 'Others' \
+        --no-cancel \
+        --checklist '' \
+        0 0 0 \
+        ImageMagick '' on )
+    ;;
+
+    8)
+      for module in ${selected_modules} ; do
+        install_${module,,}
+      done
+
+      dialog \
+        --backtitle ${title} \
+        --msgbox 'The installation was finished.' \
+        7 35
+
+      break
+    ;;
+
+    *)
+      dialog \
+        --backtitle ${title} \
+        --title 'Exit' \
+        --yesno 'Are you sure?' \
+        0 0
+
+      if [ $? = 0 ]; then
+        break
+      fi
+    ;;
+  esac
+  
+  action=$((action+1))
 done
-
-dialog \
-  --backtitle ${title} \
-  --msgbox 'The installation was finished.' \
-  7 35
-
-dialog \
-  --backtitle ${title} \
-  --yesno 'Do you want to reboot?' \
-  0 0
-
-if [ $? = 0 ]; then
-  reboot
-fi
 
 clear

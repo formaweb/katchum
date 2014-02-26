@@ -3,11 +3,11 @@
 install_php5() {
 
   # Downloading
-  wget -O ${sources}/php-5.4.16.tar.gz "http://us.php.net/distributions/php-5.4.16.tar.gz"
+  wget -O ${sources}/php-5.5.9.tar.gz "http://us.php.net/distributions/php-5.5.9.tar.gz"
 
   # Extracting
-  tar xzvf ${sources}/php-5.4.16.tar.gz -C ${sources}
-  cd ${sources}/php-5.4.16
+  tar xzvf ${sources}/php-5.5.9.tar.gz -C ${sources}
+  cd ${sources}/php-5.5.9
 
   # Installing Dependencies
   apt-get -y install libmysqlclient-dev mysql-client libcurl4-openssl-dev libgd2-xpm-dev libjpeg-dev libpng3-dev libxpm-dev libfreetype6-dev libt1-dev libmcrypt-dev libxslt1-dev bzip2 libbz2-dev libxml2-dev libevent-dev libltdl-dev libmagickwand-dev libmagickcore-dev imagemagick libreadline-dev libc-client-dev libsnmp-dev snmpd snmp libpq-dev
