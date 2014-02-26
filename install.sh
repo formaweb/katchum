@@ -158,7 +158,7 @@ while true ; do
 
     8)
       for module in ${selected_modules[@]} ; do
-        install_${module}
+        install_${module,,}
       done
 
       dialog \
