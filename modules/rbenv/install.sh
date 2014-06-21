@@ -1,7 +1,9 @@
 #!/bin/bash
 
 install_rbenv() {
-  apt-get -y install libmysql-ruby
+  apt-get -y install ruby-mysql
+  # FIXME old version libmysql-ruby
+  
   curl https://raw.github.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash
 
   # FIXME: Insert before [ -z "$PS1" ] && return
