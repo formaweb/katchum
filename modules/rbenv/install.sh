@@ -4,7 +4,7 @@ install_rbenv() {
   apt-get -y install ruby-mysql
   # FIXME old version libmysql-ruby
   
-  curl https://raw.github.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash
+  curl https://raw.githubusercontent.com/fesplugas/rbenv-installer/master/bin/rbenv-installer | bash
 
   # FIXME: Insert before [ -z "$PS1" ] && return
   echo '# Rbenv
@@ -17,9 +17,9 @@ fi' >> ~/.bashrc
 
   source ~/.bashrc
 
-  rbenv bootstrap-ubuntu-12-04
+  # rbenv bootstrap-ubuntu-12-04
 
-  rbenv install 2.1.1
-  rbenv global 2.1.1
-  rbenv update
+  rbenv install 2.1.2
+  rbenv global 2.1.2
+  # rbenv update
 }
