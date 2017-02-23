@@ -10,14 +10,15 @@ install_php5() {
   cd ${sources}/php-5.5.9
 
   # Installing Dependencies
-  apt-get -y install libmysqlclient-dev mysql-client libcurl4-openssl-dev libgd2-xpm-dev libjpeg-dev libpng3-dev libxpm-dev libfreetype6-dev libt1-dev libmcrypt-dev libxslt1-dev bzip2 libbz2-dev libxml2-dev libevent-dev libltdl-dev libmagickwand-dev libmagickcore-dev imagemagick libreadline-dev libc-client-dev libsnmp-dev snmpd snmp libpq-dev
+  apt-get -y install libmysqlclient-dev mysql-client libcurl4-openssl-dev libgd2-xpm-dev libjpeg-dev libpng3-dev libxpm-dev libfreetype6-dev libmcrypt-dev libxslt1-dev bzip2 libbz2-dev libxml2-dev libevent-dev libltdl-dev libmagickwand-dev libmagickcore-dev imagemagick libreadline-dev libc-client-dev libsnmp-dev snmpd snmp libpq-dev
 
   # Fixings
-  if [ $(arch) == "i686" ]; then
-    arch=i386-linux-gnu
-  else
-    arch=$(arch)-linux-gnu
-  fi
+  arch=x86_64-linux-gnu
+  # if [ $(arch) == "i686" ]; then
+  #   arch=i386-linux-gnu
+  # else
+  #   arch=$(arch)-linux-gnu
+  # fi
 
   [ -f /usr/lib/${arch}/libjpeg.so ] && ln -fs /usr/lib/${arch}/libjpeg.so /usr/lib/
   [ -f /usr/lib/${arch}/libpng.so ] && ln -fs /usr/lib/${arch}/libpng.so /usr/lib/
@@ -27,7 +28,7 @@ install_php5() {
 
   # Compiling
   ./buildconf --force
-  ./configure --prefix=/usr/local/php5 --with-config-file-path=/etc/php5 --with-config-file-scan-dir=/etc/php5/conf.d --with-curl --with-pear --with-gd --with-jpeg-dir --with-png-dir --with-zlib --with-xpm-dir --with-freetype-dir --with-t1lib --with-mcrypt --with-mhash --with-mysql --with-pgsql --with-mysqli --with-pdo-mysql --with-pdo-pgsql --with-openssl --with-xmlrpc --with-xsl --with-bz2 --with-gettext --with-readline --with-fpm-user=www-data --with-fpm-group=www-data --with-imap --with-imap-ssl --with-kerberos --with-snmp --disable-debug --enable-fpm --enable-cli --enable-inline-optimization --enable-exif --enable-wddx --enable-zip --enable-bcmath --enable-calendar --enable-ftp --enable-mbstring --enable-soap --enable-sockets --enable-shmop --enable-dba --enable-sysvsem --enable-sysvshm --enable-sysvmsg --disable-fileinfo
+  ./configure --prefix=/usr/local/php5 --with-config-file-path=/etc/php5 --with-config-file-scan-dir=/etc/php5/conf.d --with-curl --with-pear --with-gd --with-jpeg-dir --with-png-dir --with-zlib --with-xpm-dir --with-freetype-dir --with-mcrypt --with-mhash --with-mysql --with-pgsql --with-mysqli --with-pdo-mysql --with-pdo-pgsql --with-openssl --with-xmlrpc --with-xsl --with-bz2 --with-gettext --with-readline --with-fpm-user=www-data --with-fpm-group=www-data --with-imap --with-imap-ssl --with-kerberos --with-snmp --disable-debug --enable-fpm --enable-cli --enable-inline-optimization --enable-exif --enable-wddx --enable-zip --enable-bcmath --enable-calendar --enable-ftp --enable-mbstring --enable-soap --enable-sockets --enable-shmop --enable-dba --enable-sysvsem --enable-sysvshm --enable-sysvmsg --disable-fileinfo
   make -j8
   make install
 
