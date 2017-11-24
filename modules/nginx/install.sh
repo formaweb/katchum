@@ -3,11 +3,11 @@
 install_nginx() {
 
   # Downloading
-  wget -O ${sources}/nginx-1.9.6.tar.gz "http://nginx.org/download/nginx-1.9.6.tar.gz"
+  wget -O ${sources}/nginx-1.12.2.tar.gz "http://nginx.org/download/nginx-1.12.2.tar.gz"
 
   # Extracting
-  tar xzvf ${sources}/nginx-1.9.6.tar.gz -C ${sources}
-  cd ${sources}/nginx-1.9.6
+  tar xzvf ${sources}/nginx-1.12.2.tar.gz -C ${sources}
+  cd ${sources}/nginx-1.12.2
 
   # Installing Dependencies
   apt-get -y install libpcre3 libpcre3-dev libssl-dev
