@@ -1,16 +1,16 @@
 #!/bin/bash
 
 install_rbenv() {
-  apt-get -y install ruby-mysql rbenv ruby-build
+  git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+  cd ~/.rbenv && src/configure && make -C src
+  ~/.rbenv/bin/rbenv init
 
-  # FIXME: Insert before [ -z "$PS1" ] && return
   echo '# Rbenv
-export RBENV_ROOT="${HOME}/.rbenv"
-
-if [ -d "${RBENV_ROOT}" ]; then
-  export PATH="${RBENV_ROOT}/bin:${PATH}"
-  eval "$(rbenv init -)"
-fi' >> ~/.bashrc
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"' >> ~/.bashrc
 
   source ~/.bashrc
+  
+  mkdir -p "$(rbenv root)"/plugins
+  git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
 }
