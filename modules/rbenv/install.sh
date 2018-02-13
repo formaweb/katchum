@@ -11,6 +11,6 @@ eval "$(rbenv init -)"' >> ~/.bashrc
 
   source ~/.bashrc
   
-  mkdir -p "$(rbenv root)"/plugins
-  git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
+  mkdir -p /root/.rbenv/plugins
+  git clone https://github.com/rbenv/ruby-build.git /root/.rbenv/plugins/ruby-build
 }
